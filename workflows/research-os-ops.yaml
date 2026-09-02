@@ -1,0 +1,19 @@
+name: Research OS Operations
+command: cd /Users/sakki/Development/projects/research-os && python3 {{script}} {{arg}}
+tags:
+  - research-os
+  - stocks
+  - valuation
+  - audit
+  - linear
+description: Run Research OS automation scripts (Linear coverage bootstrap, decision memo audit, dashboard, model export).
+shells:
+  - zsh
+  - bash
+arguments:
+  - name: script
+    description: Script path (e.g. scripts/bootstrap_linear_coverage.py, scripts/audit_memo.py, scripts/dashboard.py)
+    default_value: scripts/dashboard.py
+  - name: arg
+    description: Optional argument (e.g. TICKER or coverage/TICKER/decision-memo-*.md)
+    default_value: ""

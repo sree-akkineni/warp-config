@@ -1,0 +1,31 @@
+name = "Rendezvous Workspace"
+color = "magenta"
+
+[[panes]]
+id = "root"
+split = "horizontal"
+children = ["mobile_dev", "backend_stack"]
+
+[[panes]]
+id = "mobile_dev"
+type = "terminal"
+directory = "~/Development/projects/rendezvous-unified-mvp/apps/mobile"
+commands = []
+is_focused = true
+
+[[panes]]
+id = "backend_stack"
+split = "vertical"
+children = ["functions_dev", "agent_terminal"]
+
+[[panes]]
+id = "functions_dev"
+type = "terminal"
+directory = "~/Development/projects/rendezvous-unified-mvp/apps/mobile"
+commands = []
+
+[[panes]]
+id = "agent_terminal"
+type = "agent"
+directory = "~/Development/projects/rendezvous-unified-mvp"
+commands = []

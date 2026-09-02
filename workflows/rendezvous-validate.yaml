@@ -1,0 +1,16 @@
+name: Rendezvous Validation Gate
+command: cd /Users/sakki/Development/projects/rendezvous-unified-mvp && npm run {{target}}
+tags:
+  - rendezvous
+  - validate
+  - mobile
+  - web
+  - gate
+description: Run the pre-PR verification gates (lint, design audit, typechecks, vitest, jest, contracts) for Rendezvous.
+shells:
+  - zsh
+  - bash
+arguments:
+  - name: target
+    description: Validation target (mobile:validate, web:validate, validate, shared:typecheck, parity:verify)
+    default_value: mobile:validate

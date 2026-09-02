@@ -1,0 +1,15 @@
+name: AlphaOS Development Stack
+command: cd /Users/sakki/Development/projects/AlphaOS/alpha-os && pnpm {{task}}
+tags:
+  - alphaos
+  - fastapi
+  - expo
+  - dev
+description: Run AlphaOS local dev tasks (full stack, mobile only, backend agent only, or local CI).
+shells:
+  - zsh
+  - bash
+arguments:
+  - name: task
+    description: Task to run (dev, dev:agent, dev:mobile, mobile:ios, ci:local, test)
+    default_value: dev

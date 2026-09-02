@@ -1,0 +1,18 @@
+name: iOS Simulator Controls
+command: xcrun simctl {{command}} {{param}}
+tags:
+  - ios
+  - simulator
+  - simctl
+  - testing
+description: Quick iOS simulator actions (boot, shutdown, capture screenshot, open url, list devices).
+shells:
+  - zsh
+  - bash
+arguments:
+  - name: command
+    description: Simctl command (list devices, boot, shutdown, io booted screenshot, openurl booted)
+    default_value: list devices
+  - name: param
+    description: Optional param (device UDID/name, output screenshot path, or URL to open)
+    default_value: ""

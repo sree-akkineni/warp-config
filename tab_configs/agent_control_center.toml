@@ -1,0 +1,20 @@
+name = "Agent Control Center"
+color = "blue"
+
+[[panes]]
+id = "root"
+split = "horizontal"
+children = ["openclaw_pane", "oz_agent_pane"]
+
+[[panes]]
+id = "openclaw_pane"
+type = "terminal"
+directory = "~/Development/projects"
+commands = ["openclaw gateway status"]
+
+[[panes]]
+id = "oz_agent_pane"
+type = "agent"
+directory = "~/Development/projects"
+commands = []
+is_focused = true
