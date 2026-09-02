@@ -1,0 +1,23 @@
+name: Mac mini Stack & Environment Manager
+command: ~/.warp/scripts/macmini_env.sh {{action}} {{param2}} {{param3}}
+tags:
+  - macmini
+  - openclaw
+  - ios-simulator
+  - research-os
+  - alphaos
+  - healthcheck
+description: Manage OpenClaw, iOS Simulators, git repos, research-os coverage, and AlphaOS status on the Mac mini.
+shells:
+  - zsh
+  - bash
+arguments:
+  - name: action
+    description: Action (health, start, stop, restart, repos:sync, repos:status, research, alphaos)
+    default_value: health
+  - name: param2
+    description: Device name for start / additional flag (e.g. "iPhone 17 Pro")
+    default_value: "iPhone 17 Pro"
+  - name: param3
+    description: Open GUI window for simulator (true/false)
+    default_value: "false"
