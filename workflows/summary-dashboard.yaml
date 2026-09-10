@@ -1,0 +1,13 @@
+name: Multi-Agent & Stack Summary Dashboard
+command: ~/.warp/scripts/summary_dashboard.sh
+tags:
+  - dashboard
+  - linear
+  - github
+  - agents
+  - openclaw
+  - status
+description: Executive command center dashboard showing active agent daemons (OpenClaw/Grok/Sims), GitHub repos (Sidecar-Tools org), open PRs, and active Linear issues.
+shells:
+  - zsh
+  - bash

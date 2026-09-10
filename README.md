@@ -50,6 +50,7 @@ Central Bash script managing local daemons, simulators, and multi-repo state.
 
 ### 2. Warp Workflows (`~/.warp/workflows/`)
 Surfaced automatically in the Warp Command Palette (`Cmd+P` / `Ctrl+Shift+R`):
+* **`summary-dashboard.yaml`** ("Multi-Agent & Stack Summary Dashboard"): Live executive view of active agent processes (OpenClaw, Grok, Simulators), GitHub repos/PRs (across `Sidecar-Tools` & `sree-akkineni`), and active Linear issues.
 * **`macmini-env-manager.yaml`** ("Mac mini Stack & Environment Manager"): Full lifecycle, health check, repository sync, and service control.
 * **`rendezvous-validate.yaml`** ("Rendezvous Validation Gate"): Runs pre-PR verification gates (`mobile:validate`, `web:validate`, `validate`, `shared:typecheck`, `parity:verify`).
 * **`research-os-ops.yaml`** ("Research OS Operations"): Runs Linear coverage bootstrapping (`scripts/bootstrap_linear_coverage.py`), decision memo audits (`scripts/audit_memo.py`), and dashboard summaries.
