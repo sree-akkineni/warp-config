@@ -1,10 +1,57 @@
 # Mac mini Stack & Warp Environment Manager
 
-This repository contains custom Warp workflows, automation scripts, and tab configurations for managing local processes, repositories, iOS simulators, and autonomous agent instances on the remote Mac mini.
+This repository contains custom Warp workflows, automation scripts, CLI shortcuts, and tab configurations for managing multi-repo workflows, iOS simulators, autonomous agents, and executive status dashboards across macOS machines (e.g. MacBook Pro and Mac mini).
 
 ---
 
-## Tooling Roles & Stack Architecture
+## 🚀 Quick Install on Another Machine (e.g., MacBook Pro)
+
+Follow these steps on any new machine or secondary Mac to sync the exact same Warp workflows, dashboard, and scripts:
+
+### Step 1: Clone into `~/.warp`
+If `~/.warp` does not exist yet:
+```bash
+git clone https://github.com/sree-akkineni/warp-config.git ~/.warp
+```
+
+If `~/.warp` already exists on your machine, initialize it as a remote tracking branch:
+```bash
+cd ~/.warp
+git init -b main
+git remote add origin https://github.com/sree-akkineni/warp-config.git
+git fetch origin main
+git reset --hard origin/main
+git branch --set-upstream-to=origin/main main
+```
+
+### Step 2: Hook up CLI Shortcuts & PATH
+Add the Warp initialization script to your `~/.zshrc`:
+```bash
+echo '[[ -f ~/.warp/init.sh ]] && source ~/.warp/init.sh' >> ~/.zshrc
+source ~/.zshrc
+```
+
+This automatically enables:
+* `dashboard` → Runs the executive status dashboard.
+* `macmini` → Runs the host and environment manager script.
+* Adds `~/.warp/bin` to your system `PATH`.
+
+---
+
+## 🖥️ Recommended Desktop Setup: The "Zero-Clutter" HUD
+
+To prevent Warp from competing with Cursor, Devin, Claude, and your browser for screen space, configure Warp as an invisible dropdown Heads-Up Display:
+
+1. In Warp, open **Settings (`Cmd + ,`)** → **Features** → **Window**.
+2. Enable **Hotkey Window** and set the shortcut to `Option + Space` (or `Ctrl + ~`).
+3. Whenever you need to sync repos, inspect agents, or run tests:
+   * Press `Option + Space` (Warp drops down).
+   * Run your command or workflow.
+   * Press `Option + Space` (Warp disappears instantly).
+
+---
+
+## 🛠️ Tooling Roles in the Multi-Agent Stack
 
 ```mermaid
 flowchart TD
@@ -28,28 +75,39 @@ flowchart TD
 
 ---
 
-## Workflows & Scripts
+## ⚡ Daily Usage Guide
 
-### 1. `~/.warp/scripts/macmini_env.sh`
-Central Bash script managing local daemons, simulators, and multi-repo state.
+### 1. The Summary Dashboard
+Run anytime to see a real-time status rollup of active agent daemons, GitHub repositories/PRs, and Linear issues:
+```bash
+dashboard
+# or
+~/.warp/scripts/summary_dashboard.sh
+```
+* **Warp Shortcut:** Press `Ctrl + Shift + R` → select **"Multi-Agent & Stack Summary Dashboard"**.
 
-* **Usage:**
-  ```bash
-  ~/.warp/scripts/macmini_env.sh [action] [param2] [param3]
-  ```
+### 2. The Stack & Environment Manager
+```bash
+macmini [action] [param2] [param3]
+# or
+~/.warp/scripts/macmini_env.sh [action]
+```
 
 * **Available Actions:**
   * `health` / `status`: Full status check across OpenClaw gateway, booted iOS simulators, research-os coverage/FMP status, AlphaOS dev ports, and system metrics.
+  * `repos:sync`: Synchronizes all active repositories (`research-os`, `AlphaOS`, `rendezvous-unified-mvp`, `ai-brain`) via `git fetch --prune` and `git pull --rebase`.
+  * `repos:status`: Summarizes active branch and dirty status across all active repos.
   * `start` / `up`: Boots target iOS simulator headless (or with GUI) and ensures OpenClaw gateway is running.
   * `stop` / `down`: Shuts down iOS simulators and stops OpenClaw daemon.
   * `restart`: Clean restart of OpenClaw and simulator environment.
-  * `repos:sync`: Synchronizes all active repositories (`research-os`, `AlphaOS`, `rendezvous-unified-mvp`, `ai-brain`) via `git fetch --prune` and `git pull --rebase`.
-  * `repos:status`: Summarizes active branch and dirty status across all active repos.
   * `research`: Inspects the `research-os` active coverage registry and FMP environment.
   * `alphaos`: Verifies if AlphaOS FastAPI backend (`:8000`) and Expo Metro (`:8081`) are active.
 
-### 2. Warp Workflows (`~/.warp/workflows/`)
-Surfaced automatically in the Warp Command Palette (`Cmd+P` / `Ctrl+Shift+R`):
+---
+
+## 📑 Workflows Reference (`~/.warp/workflows/`)
+
+Warp automatically indexes these YAML files into the Command Search (`Ctrl + Shift + R`):
 * **`summary-dashboard.yaml`** ("Multi-Agent & Stack Summary Dashboard"): Live executive view of active agent processes (OpenClaw, Grok, Simulators), GitHub repos/PRs (across `Sidecar-Tools` & `sree-akkineni`), and active Linear issues.
 * **`macmini-env-manager.yaml`** ("Mac mini Stack & Environment Manager"): Full lifecycle, health check, repository sync, and service control.
 * **`rendezvous-validate.yaml`** ("Rendezvous Validation Gate"): Runs pre-PR verification gates (`mobile:validate`, `web:validate`, `validate`, `shared:typecheck`, `parity:verify`).
