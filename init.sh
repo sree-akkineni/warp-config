@@ -2,3 +2,4 @@
 export PATH="$HOME/.warp/bin:$PATH"
 alias dashboard="$HOME/.warp/scripts/summary_dashboard.sh"
 alias macmini="$HOME/.warp/scripts/macmini_env.sh"
+alias build="$HOME/.warp/scripts/remote_build.sh"

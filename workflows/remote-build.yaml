@@ -1,0 +1,22 @@
+name: Trigger Remote Build & Verification
+command: ~/.warp/scripts/remote_build.sh {{project}} {{task}} {{notify}}
+tags:
+  - build
+  - remote
+  - macmini
+  - validate
+  - ci
+description: Offload heavy builds, linter checks, and verification gate runs onto the Mac mini and receive status feedback with notification.
+shells:
+  - zsh
+  - bash
+arguments:
+  - name: project
+    description: Target repository project (rendezvous, alphaos, research-os)
+    default_value: rendezvous
+  - name: task
+    description: Build/gate task (rendezvous: mobile:validate/web:validate/shared:typecheck/validate; alphaos: ci:local/typecheck/lint/test/build; research-os: scorecard/dashboard)
+    default_value: shared:typecheck
+  - name: notify
+    description: Send macOS desktop banner notification on completion (true/false)
+    default_value: "true"

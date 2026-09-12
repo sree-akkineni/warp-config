@@ -34,6 +34,7 @@ source ~/.zshrc
 This automatically enables:
 * `dashboard` → Runs the executive status dashboard.
 * `macmini` → Runs the host and environment manager script.
+* `build` → Triggers remote builds/gates and sends notifications.
 * Adds `~/.warp/bin` to your system `PATH`.
 
 ---
@@ -102,12 +103,25 @@ macmini [action] [param2] [param3]
   * `restart`: Clean restart of OpenClaw and simulator environment.
   * `research`: Inspects the `research-os` active coverage registry and FMP environment.
   * `alphaos`: Verifies if AlphaOS FastAPI backend (`:8000`) and Expo Metro (`:8081`) are active.
+### 3. Remote Build & Validation Runner
+Offload heavy tests, linter runs, or verification gates to the Mac mini:
+```bash
+build [project] [task] [notify:true|false]
+# Example:
+build rendezvous shared:typecheck
+build rendezvous mobile:validate
+build alphaos ci:local
+build research-os scorecard
+```
+* **Warp Shortcut:** Press `Ctrl + Shift + R` → select **"Trigger Remote Build & Verification"**.
 
 ---
 
 ## 📑 Workflows Reference (`~/.warp/workflows/`)
 
 Warp automatically indexes these YAML files into the Command Search (`Ctrl + Shift + R`):
+
+* **`remote-build.yaml`** ("Trigger Remote Build & Verification"): Offload builds and validation suites to the Mac mini with macOS completion notifications.
 * **`summary-dashboard.yaml`** ("Multi-Agent & Stack Summary Dashboard"): Live executive view of active agent processes (OpenClaw, Grok, Simulators), GitHub repos/PRs (across `Sidecar-Tools` & `sree-akkineni`), and active Linear issues.
 * **`macmini-env-manager.yaml`** ("Mac mini Stack & Environment Manager"): Full lifecycle, health check, repository sync, and service control.
 * **`rendezvous-validate.yaml`** ("Rendezvous Validation Gate"): Runs pre-PR verification gates (`mobile:validate`, `web:validate`, `validate`, `shared:typecheck`, `parity:verify`).
