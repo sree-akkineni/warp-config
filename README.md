@@ -35,6 +35,7 @@ This automatically enables:
 * `dashboard` → Runs the executive status dashboard.
 * `macmini` → Runs the host and environment manager script.
 * `build` → Triggers remote builds/gates and sends notifications.
+* `deploy-sim` → Installs and launches the latest build onto an iOS simulator.
 * Adds `~/.warp/bin` to your system `PATH`.
 
 ---
@@ -115,12 +116,23 @@ build research-os scorecard
 ```
 * **Warp Shortcut:** Press `Ctrl + Shift + R` → select **"Trigger Remote Build & Verification"**.
 
+### 4. iOS Simulator Automated Deployer
+Deploy the latest compiled build and launch the app in one command:
+```bash
+deploy-sim [app] [simulator_name] [open_gui:true|false]
+# Example:
+deploy-sim rendezvous booted true
+deploy-sim alphaos "iPhone 17 Pro" true
+```
+* **Warp Shortcut:** Press `Ctrl + Shift + R` → select **"Deploy to iOS Simulator & Launch"**.
+
 ---
 
 ## 📑 Workflows Reference (`~/.warp/workflows/`)
 
 Warp automatically indexes these YAML files into the Command Search (`Ctrl + Shift + R`):
 
+* **`deploy-ios-simulator.yaml`** ("Deploy to iOS Simulator & Launch"): Auto-detects latest `.app` build in DerivedData, installs to simulator, launches bundle, and displays GUI.
 * **`remote-build.yaml`** ("Trigger Remote Build & Verification"): Offload builds and validation suites to the Mac mini with macOS completion notifications.
 * **`summary-dashboard.yaml`** ("Multi-Agent & Stack Summary Dashboard"): Live executive view of active agent processes (OpenClaw, Grok, Simulators), GitHub repos/PRs (across `Sidecar-Tools` & `sree-akkineni`), and active Linear issues.
 * **`macmini-env-manager.yaml`** ("Mac mini Stack & Environment Manager"): Full lifecycle, health check, repository sync, and service control.

@@ -1,0 +1,22 @@
+name: Deploy to iOS Simulator & Launch
+command: ~/.warp/scripts/deploy_simulator.sh {{app}} {{simulator_name}} {{open_gui}}
+tags:
+  - ios
+  - deploy
+  - simulator
+  - expo
+  - test
+description: Install the latest compiled native build (.app) onto the target iOS simulator, launch the application, and open Simulator.app.
+shells:
+  - zsh
+  - bash
+arguments:
+  - name: app
+    description: Target app to deploy (rendezvous, alphaos)
+    default_value: rendezvous
+  - name: simulator_name
+    description: Target simulator name or 'booted' for currently active (booted, iPhone 17 Pro, iPhone 17 Pro Max)
+    default_value: booted
+  - name: open_gui
+    description: Bring the Simulator.app GUI to the foreground (true/false)
+    default_value: "true"
