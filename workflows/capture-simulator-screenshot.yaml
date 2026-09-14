@@ -1,0 +1,22 @@
+name: Capture Simulator Screenshot for Review
+command: ~/.warp/scripts/capture_simulator_shot.sh {{label}} {{simulator_name}} {{custom_folder}}
+tags:
+  - ios
+  - screenshot
+  - simulator
+  - qa
+  - review
+description: Capture a high-resolution screenshot from the active iOS simulator and save to the shared review directory with a timestamped label and latest.png shortcut.
+shells:
+  - zsh
+  - bash
+arguments:
+  - name: label
+    description: Short descriptive label for this capture (e.g. login-screen, whisper-feed, checkout-error)
+    default_value: review
+  - name: simulator_name
+    description: Target simulator device or 'booted' for active simulator
+    default_value: booted
+  - name: custom_folder
+    description: Optional custom output folder path (defaults to ~/.warp/screenshots)
+    default_value: ""

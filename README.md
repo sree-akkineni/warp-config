@@ -36,6 +36,7 @@ This automatically enables:
 * `macmini` → Runs the host and environment manager script.
 * `build` → Triggers remote builds/gates and sends notifications.
 * `deploy-sim` → Installs and launches the latest build onto an iOS simulator.
+* `screenshot-sim` → Captures an iOS simulator screenshot and exports it for remote review.
 * Adds `~/.warp/bin` to your system `PATH`.
 
 ---
@@ -126,12 +127,25 @@ deploy-sim alphaos "iPhone 17 Pro" true
 ```
 * **Warp Shortcut:** Press `Ctrl + Shift + R` → select **"Deploy to iOS Simulator & Launch"**.
 
+### 5. Simulator Screenshot Exporter for Remote Review
+Capture an iOS simulator screenshot with an audit label and export to the shared folder:
+```bash
+screenshot-sim [label] [simulator_name] [custom_folder]
+# Example:
+screenshot-sim login-screen
+screenshot-sim whisper-feed booted
+screenshot-sim bug-repro booted /custom/path
+```
+* Always keeps a pointer to `~/.warp/screenshots/latest.png` for fast inspection.
+* **Warp Shortcut:** Press `Ctrl + Shift + R` → select **"Capture Simulator Screenshot for Review"**.
+
 ---
 
 ## 📑 Workflows Reference (`~/.warp/workflows/`)
 
 Warp automatically indexes these YAML files into the Command Search (`Ctrl + Shift + R`):
 
+* **`capture-simulator-screenshot.yaml`** ("Capture Simulator Screenshot for Review"): Captures full-res PNG from simulator, saves with timestamp and label to `~/.warp/screenshots/`, and updates `latest.png`.
 * **`deploy-ios-simulator.yaml`** ("Deploy to iOS Simulator & Launch"): Auto-detects latest `.app` build in DerivedData, installs to simulator, launches bundle, and displays GUI.
 * **`remote-build.yaml`** ("Trigger Remote Build & Verification"): Offload builds and validation suites to the Mac mini with macOS completion notifications.
 * **`summary-dashboard.yaml`** ("Multi-Agent & Stack Summary Dashboard"): Live executive view of active agent processes (OpenClaw, Grok, Simulators), GitHub repos/PRs (across `Sidecar-Tools` & `sree-akkineni`), and active Linear issues.
