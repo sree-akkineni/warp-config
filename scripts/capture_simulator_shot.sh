@@ -79,6 +79,11 @@ log_success "Updated shortcut: ${DEST_DIR}/latest.png"
 # 5. Dispatch notification
 notify_desktop "iOS Screenshot Captured" "${FILENAME} ready for remote review in ${DEST_DIR}"
 
+# 6. Forward to Telegram if configured
+if [ -f "/Users/sakki/.warp/scripts/send_telegram.sh" ]; then
+    /Users/sakki/.warp/scripts/send_telegram.sh "📸 iOS Simulator Screenshot [${LABEL}] on ${DEVICE_NAME}" "${FILEPATH}" || true
+fi
+
 echo -e "\n${COLOR_BOLD}${COLOR_GREEN}✓ CAPTURE & EXPORT COMPLETE${COLOR_RESET}"
 echo -e "  File:   ${FILEPATH}"
 echo -e "  Latest: ${DEST_DIR}/latest.png"

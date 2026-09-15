@@ -187,9 +187,15 @@ if [ "$STATUS" = "SUCCESS" ]; then
     echo -e "${COLOR_BOLD}${COLOR_GREEN}✓ REMOTE BUILD RESULT: PASSED (${DURATION}s)${COLOR_RESET}"
     echo -e "  Summary: ${SUMMARY}"
     notify_desktop "Mac mini Remote Build: PASSED" "${PROJECT} [${TASK}] completed in ${DURATION}s"
+    if [ -f "/Users/sakki/.warp/scripts/send_telegram.sh" ]; then
+        /Users/sakki/.warp/scripts/send_telegram.sh "✅ *Remote Build Passed* (${DURATION}s)%0A*Project:* ${PROJECT}%0A*Task:* ${TASK}%0A${SUMMARY}" "" || true
+    fi
 else
     echo -e "${COLOR_BOLD}${COLOR_RED}✗ REMOTE BUILD RESULT: FAILED (${DURATION}s)${COLOR_RESET}"
     notify_desktop "Mac mini Remote Build: FAILED" "${PROJECT} [${TASK}] failed after ${DURATION}s"
+    if [ -f "/Users/sakki/.warp/scripts/send_telegram.sh" ]; then
+        /Users/sakki/.warp/scripts/send_telegram.sh "❌ *Remote Build Failed* (${DURATION}s)%0A*Project:* ${PROJECT}%0A*Task:* ${TASK}" "" || true
+    fi
     exit 1
 fi
 echo -e "${COLOR_BOLD}${COLOR_BLUE}======================================================================${COLOR_RESET}\n"

@@ -137,7 +137,33 @@ screenshot-sim whisper-feed booted
 screenshot-sim bug-repro booted /custom/path
 ```
 * Always keeps a pointer to `~/.warp/screenshots/latest.png` for fast inspection.
+* Automatically sends the screenshot to your Telegram if configured.
 * **Warp Shortcut:** Press `Ctrl + Shift + R` → select **"Capture Simulator Screenshot for Review"**.
+
+---
+
+## 📱 Mobile Operations (iPhone via Termius & Telegram)
+
+### 1. Termius (1-Tap Command Center)
+Configure Termius on your iPhone to connect to your Mac mini over Twingate:
+* **Host:** Your Mac mini local IP or hostname (`Akkineni-Mac-Mini.local`)
+* **Username:** `sakki`
+* **Create Termius Snippets (1-tap buttons):**
+  * `dashboard` → Live overview of PRs, Linear tasks, and agents.
+  * `macmini repos:sync` → Pulls all 5 repositories.
+  * `screenshot-sim quick-check` → Captures active simulator screen.
+  * `deploy-sim rendezvous booted true` → Installs and opens Rendezvous.
+
+### 2. Telegram Bot Alerts & Photos
+To receive push notifications and screenshot images directly to your phone:
+1. Message **@BotFather** on Telegram: send `/newbot` to get your `TELEGRAM_BOT_TOKEN`.
+2. Message **@userinfobot** on Telegram to get your numeric `TELEGRAM_CHAT_ID`.
+3. Create `~/.warp/telegram.env` on your Mac mini:
+   ```bash
+   TELEGRAM_BOT_TOKEN="your_bot_token"
+   TELEGRAM_CHAT_ID="your_numeric_chat_id"
+   ```
+4. Once set, every `screenshot-sim` call automatically pushes the screenshot photo to your Telegram chat, and `build` sends success/failure alerts.
 
 ---
 
