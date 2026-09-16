@@ -47,7 +47,7 @@ agent_mode_codebase_context_auto_indexing = true
 [appearance]
 
 [appearance.vertical_tabs]
-display_granularity = "panes"
+display_granularity = "tabs"
 enabled = true
 primary_info = "working_directory"
 view_mode = "compact"

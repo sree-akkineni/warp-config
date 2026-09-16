@@ -15,7 +15,7 @@ arguments:
     description: Target repository project (rendezvous, alphaos, research-os)
     default_value: rendezvous
   - name: task
-    description: Build/gate task (rendezvous: mobile:validate/web:validate/shared:typecheck/validate; alphaos: ci:local/typecheck/lint/test/build; research-os: scorecard/dashboard)
+    description: "Build/gate task (rendezvous: mobile:validate/web:validate/shared:typecheck/validate; alphaos: ci:local/typecheck/lint/test/build; research-os: scorecard/dashboard)"
     default_value: shared:typecheck
   - name: notify
     description: Send macOS desktop banner notification on completion (true/false)
