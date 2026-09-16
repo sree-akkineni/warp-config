@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-# Threshold configurations (customizable)
-LOAD_PER_CORE_THRESHOLD=2.0   # Load avg / cores > 2.0 (e.g. > 24 on 12-core)
-DISK_WARN_THRESHOLD=85        # Disk usage %
-CHECK_OPENCLAW=true           # Alert if OpenClaw is down
-CHECK_TWINGATE=true           # Alert if Twingate disconnects
+# Threshold configurations (customizable via env or defaults)
+LOAD_PER_CORE_THRESHOLD="${LOAD_PER_CORE_THRESHOLD:-2.0}"   # Load avg / cores > 2.0 (e.g. > 24 on 12-core)
+DISK_WARN_THRESHOLD="${DISK_WARN_THRESHOLD:-85}"            # Disk usage %
+CHECK_OPENCLAW="${CHECK_OPENCLAW:-true}"                    # Alert if OpenClaw is down
+CHECK_TWINGATE="${CHECK_TWINGATE:-true}"                    # Alert if Twingate disconnects
 
 STATE_FILE="/tmp/macmini_anomaly_state"
 TELEGRAM_SCRIPT="/Users/sakki/.warp/scripts/send_telegram.sh"
