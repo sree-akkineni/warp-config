@@ -165,6 +165,14 @@ To receive push notifications and screenshot images directly to your phone:
    ```
 4. Once set, every `screenshot-sim` call automatically pushes the screenshot photo to your Telegram chat, and `build` sends success/failure alerts.
 
+### 3. Out-of-Band System Anomaly Monitor
+A background daemon (`dev.warp.anomaly-monitor`) checks your Mac mini every 5 minutes and **only** alerts your Telegram if metrics deviate from normal bounds:
+* **High CPU Load:** Load avg exceeds 2x CPU capacity (>24 load on 12-core).
+* **Low Disk Space:** Root volume fills beyond 85% capacity.
+* **OpenClaw Daemon Offline:** OpenClaw process dies on port 18789.
+* **Twingate Disconnected:** Twingate remote connector daemon drops offline.
+* **Debounced:** State signature prevents alert spamming; sends a green recovery message when normal state returns.
+
 ---
 
 ## 📑 Workflows Reference (`~/.warp/workflows/`)
