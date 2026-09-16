@@ -36,7 +36,7 @@ This automatically enables:
 * `macmini` → Runs the host and environment manager script.
 * `build` → Triggers remote builds/gates and sends notifications.
 * `deploy-sim` → Installs and launches the latest build onto an iOS simulator.
-* `screenshot-sim` → Captures an iOS simulator screenshot and exports it for remote review.
+* `shot` / `sim-shot` / `screenshot-sim` → Captures an iOS simulator screenshot and exports it for remote review & Telegram delivery.
 * Adds `~/.warp/bin` to your system `PATH`.
 
 ---
@@ -127,17 +127,19 @@ deploy-sim alphaos "iPhone 17 Pro" true
 ```
 * **Warp Shortcut:** Press `Ctrl + Shift + R` → select **"Deploy to iOS Simulator & Launch"**.
 
-### 5. Simulator Screenshot Exporter for Remote Review
-Capture an iOS simulator screenshot with an audit label and export to the shared folder:
+### 5. Simulator Screenshot Exporter for Remote Review (`shot`)
+Capture an iOS simulator screenshot with an audit label and export to the shared folder (and Telegram):
 ```bash
-screenshot-sim [label] [simulator_name] [custom_folder]
-# Example:
-screenshot-sim login-screen
-screenshot-sim whisper-feed booted
-screenshot-sim bug-repro booted /custom/path
+shot [label] [simulator_name] [custom_folder]
+# Quick usage:
+shot
+shot login-screen
+shot whisper-feed booted
+
+# Aliases: 'shot', 'sim-shot', and 'screenshot-sim' all work identically
 ```
 * Always keeps a pointer to `~/.warp/screenshots/latest.png` for fast inspection.
-* Automatically sends the screenshot to your Telegram if configured.
+* Automatically uploads the full-resolution retina screenshot directly into your Telegram chat via `@srees_coding_bot`.
 * **Warp Shortcut:** Press `Ctrl + Shift + R` → select **"Capture Simulator Screenshot for Review"**.
 
 ---
@@ -151,27 +153,36 @@ Configure Termius on your iPhone to connect to your Mac mini over Twingate:
 * **Create Termius Snippets (1-tap buttons):**
   * `dashboard` → Live overview of PRs, Linear tasks, and agents.
   * `macmini repos:sync` → Pulls all 5 repositories.
-  * `screenshot-sim quick-check` → Captures active simulator screen.
+  * `shot quick-check` → Captures active simulator screen and sends to Telegram.
   * `deploy-sim rendezvous booted true` → Installs and opens Rendezvous.
 
 ### 2. Telegram Bot Alerts & Photos
-To receive push notifications and screenshot images directly to your phone:
-1. Message **@BotFather** on Telegram: send `/newbot` to get your `TELEGRAM_BOT_TOKEN`.
-2. Message **@userinfobot** on Telegram to get your numeric `TELEGRAM_CHAT_ID`.
-3. Create `~/.warp/telegram.env` on your Mac mini:
-   ```bash
-   TELEGRAM_BOT_TOKEN="your_bot_token"
-   TELEGRAM_CHAT_ID="your_numeric_chat_id"
-   ```
-4. Once set, every `screenshot-sim` call automatically pushes the screenshot photo to your Telegram chat, and `build` sends success/failure alerts.
+Push notifications and screenshot images are delivered directly to your personal Telegram chat via `@srees_coding_bot`:
+* Configured in `~/.warp/telegram.env` (`git-ignored`):
+  ```bash
+  TELEGRAM_BOT_TOKEN="your_bot_token"
+  TELEGRAM_CHAT_ID="your_user_id"
+  ```
+* Every `shot` call pushes the screenshot photo directly to your phone.
+* Every `build` command sends instant PASS/FAIL notifications with build duration.
 
 ### 3. Out-of-Band System Anomaly Monitor
-A background daemon (`dev.warp.anomaly-monitor`) checks your Mac mini every 5 minutes and **only** alerts your Telegram if metrics deviate from normal bounds:
-* **High CPU Load:** Load avg exceeds 2x CPU capacity (>24 load on 12-core).
-* **Low Disk Space:** Root volume fills beyond 85% capacity.
-* **OpenClaw Daemon Offline:** OpenClaw process dies on port 18789.
-* **Twingate Disconnected:** Twingate remote connector daemon drops offline.
-* **Debounced:** State signature prevents alert spamming; sends a green recovery message when normal state returns.
+A background daemon (`dev.warp.anomaly-monitor`) runs every 5 minutes via macOS `launchd` and **only** alerts your Telegram if system metrics deviate from normal bounds:
+* **Thresholds & Triggers:**
+  * **High CPU Load:** 1-minute load average exceeds 2.0 per core (>24.0 on 12-core Mac mini).
+  * **Low Disk Space:** Root volume exceeds 85% capacity.
+  * **OpenClaw Daemon Offline:** OpenClaw process dies on port 18789.
+  * **Twingate Disconnected:** Twingate remote connector daemon drops offline.
+* **Smart Anti-Spam Debounce:** Generates a hash signature of detected anomalies and only alerts on new or changing states, avoiding repeated spam.
+* **Auto-Recovery Confirmation:** Automatically dispatches a green confirmation alert (`✅ Mac mini Systems Recovered`) as soon as metrics normalize.
+* **Manual Testing & Overrides:**
+  ```bash
+  # Test alert trigger with a temporary low threshold:
+  LOAD_PER_CORE_THRESHOLD=0.1 ~/.warp/scripts/monitor_anomalies.sh
+
+  # Check daemon status or inspect logs:
+  cat /tmp/warp-anomaly-monitor.log
+  ```
 
 ---
 
